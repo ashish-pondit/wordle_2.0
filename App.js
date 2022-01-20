@@ -14,6 +14,9 @@ import {
 import { words } from "./words";
 import Row from "./src/components/Row";
 import react from "react";
+import Modal from "react-native-modal";
+
+import { Ionicons } from "@expo/vector-icons";
 // import { TextInput } from "react-native-web";
 
 class App extends React.Component {
@@ -31,6 +34,18 @@ class App extends React.Component {
     this.setState({ text: "" });
   }
 
+  newGame() {
+    this.setState({
+      targetWord: words[Math.floor(Math.random() * words.length)].toUpperCase(),
+      guess: ["     ", "     ", "     ", "     ", "     ", "     "],
+      cnt: 0,
+      text: "",
+    });
+    // this.setState({});
+    // this.setState({});
+    // this.setState({});
+  }
+
   // handleClick(e) {
   //   let test = this.input;
   //   const text = test._lastNativeText.trim();
@@ -41,11 +56,12 @@ class App extends React.Component {
   pressHandler() {
     console.log("button pressed");
     console.log(this.state.text);
-    if (this.state.text.length === 5) {
+    if (this.state.text.length === 5 && this.state.cnt < 6) {
       if (
         this.state.text.toLowerCase() === this.state.targetWord.toLowerCase()
       ) {
         alert("Congratulations !!!\n You have guessed the word correctly.");
+        this.newGame();
       }
       var ind = this.state.cnt;
       var temp = this.state.guess.map((i) => i);
@@ -57,7 +73,11 @@ class App extends React.Component {
 
       // this.setState({ text: "" });
       // console.log("inside if");
-    } else {
+    } else if (this.state.cnt > 5) {
+      alert("Sorry, you've lost.\n Answer: " + this.state.targetWord);
+      this.newGame();
+      // alert("please enter a 5 letter word");
+    } else if (this.state.text < 5) {
       alert("please enter a 5 letter word");
     }
 
@@ -120,7 +140,8 @@ class App extends React.Component {
               borderRadius: 40,
               borderWidth: 0.2,
             }}
-            value={this.text}
+            maxLength={5}
+            value={this.state.text}
             onChangeText={(text) => this.setState({ text })}
           ></TextInput>
           <TouchableOpacity>
@@ -128,7 +149,7 @@ class App extends React.Component {
               style={{
                 height: 60,
                 width: 130,
-                backgroundColor: "#A2CDCD",
+                backgroundColor: "#deede9",
                 textAlign: "center",
                 textAlignVertical: "center",
                 position: "relative",
@@ -143,6 +164,50 @@ class App extends React.Component {
             >
               ENTER
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              height: 70,
+              width: 70,
+              // backgroundColor: "#c4eee8",
+              position: "absolute",
+              bottom: 50,
+              left: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+              borderRadius: 30,
+              // padding: 1,
+              // borderWidth: 0.2,
+            }}
+            onPress={() => this.newGame()}
+          >
+            {/* <Ionicons
+              name="md-refresh-circle-outline"
+              size={50}
+              color="#11468F"
+              // style={{ margin: 5 }}
+            /> */}
+            <Ionicons name="md-reload-circle" size={65} color="#add2c8" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              height: 70,
+              width: 70,
+              // backgroundColor: "#c4eee8",
+              position: "absolute",
+              bottom: 50,
+              right: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+              borderRadius: 30,
+              // padding: 1,
+              // borderWidth: 0.2,
+            }}
+            onPress={() => null}
+          >
+            <Ionicons name="information-circle" size={65} color="#add2c8" />
           </TouchableOpacity>
         </ScrollView>
       </View>

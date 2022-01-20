@@ -14,21 +14,42 @@ const Row = ({ target, row }) => {
   console.log(row);
   console.log("###################");
   let rowView = [];
+  var charCount = {};
+  for (let i = 0; i < target.length; i++) {
+    if (charCount.hasOwnProperty(target[i])) {
+      charCount[target[i]] += 1;
+    } else {
+      charCount[target[i]] = 1;
+    }
 
+    if (row[i] === target[i]) {
+      charCount[target[i]] -= 1;
+    }
+  }
+  console.log(charCount);
   for (let i = 0; i < target.length; i++) {
     // console.log(row[i]);
     if (row[i] === target[i]) {
+      charCount[target[i]] -= 1;
       rowView.push(
         <Text style={styles.txtGreen} key={i}>
           {row[i]}
         </Text>
       );
     } else if (target.includes(row[i])) {
-      rowView.push(
-        <Text style={styles.txtYellow} key={i}>
-          {row[i]}
-        </Text>
-      );
+      if (charCount[row[i]] >= 1) {
+        rowView.push(
+          <Text style={styles.txtYellow} key={i}>
+            {row[i]}
+          </Text>
+        );
+      } else {
+        rowView.push(
+          <Text style={styles.txtGray} key={i}>
+            {row[i]}
+          </Text>
+        );
+      }
     } else {
       rowView.push(
         <Text style={styles.txtGray} key={i}>
