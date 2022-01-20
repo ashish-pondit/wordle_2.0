@@ -15,104 +15,225 @@ import Row from "./src/components/Row";
 import react from "react";
 // import { TextInput } from "react-native-web";
 
-export default function App() {
-  const temp = words[Math.floor(Math.random() * words.length)].toUpperCase();
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      targetWord: words[Math.floor(Math.random() * words.length)].toUpperCase(),
+      guess: ["     ", "     ", "     ", "     ", "     ", "     "],
+      cnt: 0,
+      text: "",
+    };
+  }
 
-  const [targetWord, settargetWord] = React.useState(temp);
-  const [text, setText] = React.useState("");
-  const [guess, setGuess] = React.useState(["", "", "", "", "", "", ""]);
-  const [cnt, setCnt] = React.useState(0);
+  clearFunc(e) {
+    this.setState({ text: "" });
+  }
 
-  // var guesses = ["", "", "", "", "", ""];
-  // var gCnt = 0;
+  // handleClick(e) {
+  //   let test = this.input;
+  //   const text = test._lastNativeText.trim();
+  //   this.props.onAddClick(text);
 
-  const pressHandler = (text) => {
-    console.log("pressing button");
-    console.log(text);
-    console.log(cnt);
-    // console.log(guesses);
-    console.log(text.length);
-    if (text.length === 5) {
-      console.log("yes this is i was waiting for");
-      // guess[gCnt] = text;
-      setGuess((...t) => (t[cnt] = text));
-      setCnt((...v) => v + 1);
+  // }
+
+  pressHandler() {
+    console.log("button pressed");
+    console.log(this.state.text);
+    if (this.state.text.length === 5) {
+      if (
+        this.state.text.toLowerCase() === this.state.targetWord.toLowerCase()
+      ) {
+        alert("Congratulations !!!\n You have guessed the word correctly.");
+      }
+      var ind = this.state.cnt;
+      var temp = this.state.guess.map((i) => i);
+      console.log(temp);
+      temp[ind] = this.state.text;
+      this.setState({ guess: temp });
+      this.setState({ cnt: this.state.cnt + 1 });
+      console.log(this.state.guess);
+
+      // this.setState({ text: "" });
+      // console.log("inside if");
+    } else {
+      alert("please enter a 5 letter word");
     }
-  };
 
-  const clearFunc = (val) => {
-    setText("");
-  };
-  // console.log(targetWord);
-  return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 50,
-          position: "relative",
-          margin: 20,
-          // top: StatusBar.currentHeight + 10,
-        }}
-      >
-        WORDLE
-      </Text>
-      <View
-        style={{
-          position: "relative",
-          top: 0,
-          justifyContent: "center",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Row target={targetWord} row={guess[0]}></Row>
-        <Row target={targetWord} row={guess[1]}></Row>
-        <Row target={targetWord} row={guess[2]}></Row>
-        <Row target={targetWord} row={guess[3]}></Row>
-        <Row target={targetWord} row={guess[4]}></Row>
-        <Row target={targetWord} row={guess[5]}></Row>
-      </View>
-      <TextInput
-        placeholder="input word"
-        style={{
-          position: "relative",
-          top: -5,
-          height: 70,
-          width: "60%",
-          marginTop: 20,
-          backgroundColor: "#eef6f5",
-          textAlignVertical: "center",
-          textAlign: "center",
-          fontSize: 20,
-          borderRadius: 40,
-          borderWidth: 0.2,
-        }}
-        value={text}
-        onChangeText={(value) => setText(value)}
-      ></TextInput>
-      <TouchableOpacity>
+    // this.setState({cnt: cnt+1})
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
         <Text
           style={{
-            height: 70,
-            width: 150,
-            backgroundColor: "#A2CDCD",
-            textAlign: "center",
-            textAlignVertical: "center",
+            fontSize: 50,
             position: "relative",
-            top: 30,
-            borderRadius: 50,
-            fontSize: 15,
-          }}
-          onPress={() => {
-            pressHandler(text), clearFunc(text);
+            margin: 20,
+            // top: StatusBar.currentHeight + 10,
           }}
         >
-          ENTER
+          WORDLE
         </Text>
-      </TouchableOpacity>
-    </View>
-  );
+        <View
+          style={{
+            position: "relative",
+            top: 0,
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Row target={this.state.targetWord} row={this.state.guess[0]}></Row>
+          <Row target={this.state.targetWord} row={this.state.guess[1]}></Row>
+          <Row target={this.state.targetWord} row={this.state.guess[2]}></Row>
+          <Row target={this.state.targetWord} row={this.state.guess[3]}></Row>
+          <Row target={this.state.targetWord} row={this.state.guess[4]}></Row>
+          <Row target={this.state.targetWord} row={this.state.guess[5]}></Row>
+        </View>
+        <TextInput
+          placeholder="input word"
+          style={{
+            position: "relative",
+            top: -5,
+            height: 70,
+            width: "60%",
+            marginTop: 20,
+            backgroundColor: "#eef6f5",
+            textAlignVertical: "center",
+            textAlign: "center",
+            fontSize: 20,
+            borderRadius: 40,
+            borderWidth: 0.2,
+          }}
+          value={this.text}
+          onChangeText={(text) => this.setState({ text })}
+        ></TextInput>
+        <TouchableOpacity>
+          <Text
+            style={{
+              height: 70,
+              width: 150,
+              backgroundColor: "#A2CDCD",
+              textAlign: "center",
+              textAlignVertical: "center",
+              position: "relative",
+              top: 30,
+              borderRadius: 50,
+              fontSize: 15,
+            }}
+            onPress={(e) => {
+              this.pressHandler(), this.clearFunc(e);
+            }}
+          >
+            ENTER
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
+
+// export default function App() {
+//   const temp = words[Math.floor(Math.random() * words.length)].toUpperCase();
+
+//   const [targetWord, settargetWord] = React.useState(temp);
+//   const [text, setText] = React.useState("");
+//   const [guess, setGuess] = React.useState(["", "", "", "", "", "", ""]);
+//   const [cnt, setCnt] = React.useState(0);
+
+//   // var guesses = ["", "", "", "", "", ""];
+//   // var gCnt = 0;
+
+//   const pressHandler = (text) => {
+//     console.log("pressing button");
+//     console.log(text);
+//     console.log(cnt);
+//     // console.log(guesses);
+//     console.log(text.length);
+//     if (text.length === 5) {
+//       console.log("yes this is i was waiting for");
+//       // guess[gCnt] = text;
+//       // setGuess((...t) => (t[cnt] = text));
+//       // setCnt((...v) => v + 1);
+//       setGuess([...guess, ])
+//     }
+//   };
+
+//   const clearFunc = (val) => {
+//     setText("");
+//   };
+//   // console.log(targetWord);
+//   return (
+//     <View style={styles.container}>
+//       <Text
+//         style={{
+//           fontSize: 50,
+//           position: "relative",
+//           margin: 20,
+//           // top: StatusBar.currentHeight + 10,
+//         }}
+//       >
+//         WORDLE
+//       </Text>
+//       <View
+//         style={{
+//           position: "relative",
+//           top: 0,
+//           justifyContent: "center",
+//           alignContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Row target={targetWord} row={guess[0]}></Row>
+//         <Row target={targetWord} row={guess[1]}></Row>
+//         <Row target={targetWord} row={guess[2]}></Row>
+//         <Row target={targetWord} row={guess[3]}></Row>
+//         <Row target={targetWord} row={guess[4]}></Row>
+//         <Row target={targetWord} row={guess[5]}></Row>
+//       </View>
+//       <TextInput
+//         placeholder="input word"
+//         style={{
+//           position: "relative",
+//           top: -5,
+//           height: 70,
+//           width: "60%",
+//           marginTop: 20,
+//           backgroundColor: "#eef6f5",
+//           textAlignVertical: "center",
+//           textAlign: "center",
+//           fontSize: 20,
+//           borderRadius: 40,
+//           borderWidth: 0.2,
+//         }}
+//         value={text}
+//         onChangeText={(value) => setText(value)}
+//       ></TextInput>
+//       <TouchableOpacity>
+//         <Text
+//           style={{
+//             height: 70,
+//             width: 150,
+//             backgroundColor: "#A2CDCD",
+//             textAlign: "center",
+//             textAlignVertical: "center",
+//             position: "relative",
+//             top: 30,
+//             borderRadius: 50,
+//             fontSize: 15,
+//           }}
+//           onPress={() => {
+//             pressHandler(text), clearFunc(text);
+//           }}
+//         >
+//           ENTER
+//         </Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -123,3 +244,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAEDF0",
   },
 });
+
+export default App;
