@@ -60,7 +60,6 @@ export const words = [
   "Focus",
   "Force",
   "Frame",
-  "Frank",
   "Front",
   "Fruit",
   "Glass",

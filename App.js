@@ -61,7 +61,11 @@ class App extends React.Component {
         this.state.text.toLowerCase() === this.state.targetWord.toLowerCase()
       ) {
         alert("Congratulations !!!\n You have guessed the word correctly.");
-        this.newGame();
+        // this.newGame();
+      } else if (this.state.cnt >= 5) {
+        alert("Sorry, you've lost.\n Answer: " + this.state.targetWord);
+        // this.newGame();
+        // alert("please enter a 5 letter word");
       }
       var ind = this.state.cnt;
       var temp = this.state.guess.map((i) => i);
@@ -73,7 +77,7 @@ class App extends React.Component {
 
       // this.setState({ text: "" });
       // console.log("inside if");
-    } else if (this.state.cnt > 5) {
+    } else if (this.state.cnt >= 5) {
       alert("Sorry, you've lost.\n Answer: " + this.state.targetWord);
       this.newGame();
       // alert("please enter a 5 letter word");
@@ -190,7 +194,7 @@ class App extends React.Component {
             /> */}
             <Ionicons name="md-reload-circle" size={65} color="#add2c8" />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               height: 70,
               width: 70,
@@ -208,7 +212,7 @@ class App extends React.Component {
             onPress={() => null}
           >
             <Ionicons name="information-circle" size={65} color="#add2c8" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
       </View>
     );
