@@ -54,8 +54,8 @@ class App extends React.Component {
   // }
 
   pressHandler() {
-    console.log("button pressed");
-    console.log(this.state.text);
+    // console.log("button pressed");
+    // console.log(this.state.text);
     if (this.state.text.length === 5 && this.state.cnt < 6) {
       if (
         this.state.text.toLowerCase() === this.state.targetWord.toLowerCase()
@@ -69,11 +69,11 @@ class App extends React.Component {
       }
       var ind = this.state.cnt;
       var temp = this.state.guess.map((i) => i);
-      console.log(temp);
+      // console.log(temp);
       temp[ind] = this.state.text;
       this.setState({ guess: temp });
       this.setState({ cnt: this.state.cnt + 1 });
-      console.log(this.state.guess);
+      // console.log(this.state.guess);
 
       // this.setState({ text: "" });
       // console.log("inside if");

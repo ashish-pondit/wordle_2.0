@@ -9,10 +9,10 @@ const Row = ({ target, row }) => {
   //   const { target, row } = props;
   target = target.toUpperCase();
   row = row.toUpperCase();
-  console.log("props");
+  //   console.log("props");
   console.log(target);
-  console.log(row);
-  console.log("###################");
+  //   console.log(row);
+  //   console.log("###################");
   let rowView = [];
   var charCount = {};
   for (let i = 0; i < target.length; i++) {
@@ -26,7 +26,7 @@ const Row = ({ target, row }) => {
       charCount[target[i]] -= 1;
     }
   }
-  console.log(charCount);
+  //   console.log(charCount);
   for (let i = 0; i < target.length; i++) {
     // console.log(row[i]);
     if (row[i] === target[i]) {
@@ -38,6 +38,7 @@ const Row = ({ target, row }) => {
       );
     } else if (target.includes(row[i])) {
       if (charCount[row[i]] >= 1) {
+        charCount[row[i]] -= 1;
         rowView.push(
           <Text style={styles.txtYellow} key={i}>
             {row[i]}
