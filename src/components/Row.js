@@ -1,9 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import {
-  backgroundColor,
-  color,
-} from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Row = ({ target, row }) => {
   //   const { target, row } = props;
